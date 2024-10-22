@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
-import { message } from "antd";
 
 const DriverProtected = ({ component: Component, ...rest }) => {
   const { user, loading, isDriverRegistered } = useContext(AuthContext);
@@ -14,7 +13,6 @@ const DriverProtected = ({ component: Component, ...rest }) => {
 
   // If no user, redirect to login
   if (!user) {
-    message.error("Login first")
     return <Navigate to="/login" />;
   }
 
@@ -22,12 +20,10 @@ const DriverProtected = ({ component: Component, ...rest }) => {
   if (isDriverFormPage) {
     // Redirect non-drivers away from driver-form
     if (user.role !== "driver") {
-      message.error("You are not a driver")
       return <Navigate to="/" />;
     }
     // Redirect already registered drivers away from driver-form
     if (isDriverRegistered) {
-      message.error("Driver already registered")
       return <Navigate to="/driver-dashboard" />;
     }
   }
@@ -35,12 +31,10 @@ const DriverProtected = ({ component: Component, ...rest }) => {
   else {
     // If user is driver but not registered, redirect to driver-form
     if (user.role === "driver" && !isDriverRegistered) {
-      message.error("Driver not registered")
       return <Navigate to="/driver-form" />;
     }
     // If user is not a driver, redirect to login
     if (user.role !== "driver") {
-      message.error("You are not a driver")
       return <Navigate to="/login" />;
     }
   }
