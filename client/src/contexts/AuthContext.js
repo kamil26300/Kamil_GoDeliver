@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check driver registration status whenever user changes
     if (user?.role === "driver") {
+      console.log(user)
       checkDriverRegistration();
     } else {
       setIsDriverRegistered(false);
@@ -30,8 +31,8 @@ export const AuthProvider = ({ children }) => {
 
   const checkDriverRegistration = async () => {
     try {
-      const res = await axios.get("/api/driver/isRegistered");
-      setIsDriverRegistered(res.data.isRegistered);
+      const res = await axios.get("/api/drivers/isRegistered");
+      setIsDriverRegistered(res.data.registered);
     } catch (error) {
       console.error("Error checking driver registration:", error);
       setIsDriverRegistered(false);
