@@ -79,7 +79,7 @@ Database (MongoDB)
   email: String,
   password: String,
   phone: String,
-  role: String,
+  role: String
 }
 ```
 
@@ -95,8 +95,8 @@ Database (MongoDB)
     coordinates: [Number]
   },
   isAvailable: Boolean,
-  rating: Number
-  createdAt: Date
+  rating: Number,
+  createdAt: Date,
   updatedAt: Date
 }
 ```
@@ -118,8 +118,8 @@ Database (MongoDB)
   status: String,
   price: Number,
   distance: Number,
-  estimatedDuration: Number
-  startTime: Date
+  estimatedDuration: Number,
+  startTime: Date,
   endTime: Date
 }
 ```
@@ -127,8 +127,8 @@ Database (MongoDB)
 ### 4.4 Vehicle Schema
 ```javascript
 {
-  type: String
-  basePrice: Number
+  type: String,
+  basePrice: Number,
   pricePerKm: Number
 }
 ```
