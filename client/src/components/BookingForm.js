@@ -150,8 +150,8 @@ const BookingForm = ({ setActiveTab }) => {
       libraries={libraries}
     >
       <Form form={form} onFinish={onFinish} layout="vertical">
-        <div className="grid grid-cols-5 gap-12">
-          <div className="col-span-4">
+        <div className="grid md:grid-cols-5 md:gap-12">
+          <div className="col-span-3">
             <Form.Item
               name="pickup"
               label="Pickup Location"
@@ -201,7 +201,7 @@ const BookingForm = ({ setActiveTab }) => {
             </Form.Item>
           </div>
           {distance && duration && (
-            <div className="col-span-1 flex flex-col justify-center text-base">
+            <div className="col-span-2 flex flex-col justify-center text-base">
               <p className="flex gap-2">
                 Distance: <span className="font-bold">{distance} KM</span>
               </p>
