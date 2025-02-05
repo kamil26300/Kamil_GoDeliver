@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { message } from "antd"
+import { message } from "antd";
 import axios from "axios";
 
 export const AuthContext = createContext();
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check driver registration status whenever user changes
     if (user?.role === "driver") {
-      console.log(user)
+      console.log(user);
       checkDriverRegistration();
     } else {
       setIsDriverRegistered(false);
@@ -31,7 +31,9 @@ export const AuthProvider = ({ children }) => {
 
   const checkDriverRegistration = async () => {
     try {
-      const res = await axios.get("/api/drivers/isRegistered");
+      const res = await axios.get(
+        process.env.REACT_APP_BACKEND + "/api/drivers/isRegistered"
+      );
       setIsDriverRegistered(res.data.registered);
     } catch (error) {
       console.error("Error checking driver registration:", error);
@@ -41,7 +43,9 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get("/api/users/profile");
+      const res = await axios.get(
+        process.env.REACT_APP_BACKEND + "/api/users/profile"
+      );
       setUser(res.data);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -52,7 +56,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post("/api/users/login", { email, password });
+      const res = await axios.post(
+        process.env.REACT_APP_BACKEND + "/api/users/login",
+        { email, password }
+      );
       setUser(res.data.user);
       localStorage.setItem("token", res.data.token);
       axios.defaults.headers.common[
@@ -68,7 +75,10 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const res = await axios.post("/api/users/register", userData);
+      const res = await axios.post(
+        process.env.REACT_APP_BACKEND + "/api/users/register",
+        userData
+      );
       setUser(res.data.user);
       localStorage.setItem("token", res.data.token);
       axios.defaults.headers.common[
@@ -90,7 +100,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, isDriverRegistered }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, isDriverRegistered }}
+    >
       {children}
     </AuthContext.Provider>
   );

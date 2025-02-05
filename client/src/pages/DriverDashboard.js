@@ -60,7 +60,9 @@ const DriverDashboard = () => {
 
   const fetchActiveBooking = async () => {
     try {
-      const response = await axios.get("/api/bookings/driver/active");
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND + "/api/bookings/driver/active"
+      );
       setActiveBooking(response.data);
     } catch (error) {
       console.error("Error fetching active booking:", error);
@@ -69,7 +71,9 @@ const DriverDashboard = () => {
 
   const fetchPendingBookings = async () => {
     try {
-      const response = await axios.get("/api/bookings/driver/pending");
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND + "/api/bookings/driver/pending"
+      );
       setPendingBookings(response.data);
     } catch (error) {
       console.error("Error fetching pending bookings:", error);
@@ -89,9 +93,11 @@ const DriverDashboard = () => {
 
   const cancelBooking = async (bookingId) => {
     try {
-      await axios.put(`/api/bookings/${bookingId}/status`, {status: "cancelled"});
+      await axios.put(`/api/bookings/${bookingId}/status`, {
+        status: "cancelled",
+      });
       message.success("Booking cancelled");
-      fetchPendingBookings()
+      fetchPendingBookings();
     } catch (error) {
       message.error("Failed to update booking status");
     }
@@ -223,7 +229,10 @@ const DriverDashboard = () => {
                   </div>
                   <div className="flex flex-col justify-around">
                     {activeBooking.status === "accepted" && (
-                      <Button type="primary" onClick={() => setOtpModalVisible(true)}>
+                      <Button
+                        type="primary"
+                        onClick={() => setOtpModalVisible(true)}
+                      >
                         Start Trip
                       </Button>
                     )}
@@ -250,7 +259,7 @@ const DriverDashboard = () => {
                         fullscreenControl: false,
                         cameraControl: false,
                         mapTypeControl: false,
-                        rotateControl: false
+                        rotateControl: false,
                       }}
                     >
                       {directions && (
@@ -295,17 +304,15 @@ const DriverDashboard = () => {
                     <List.Item
                       actions={[
                         <div className="flex flex-col gap-6">
-                        <Button
-                          onClick={() => cancelBooking(booking._id)}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          type="primary"
-                          onClick={() => handleAcceptBooking(booking._id)}
-                        >
-                          Accept
-                        </Button>
+                          <Button onClick={() => cancelBooking(booking._id)}>
+                            Cancel
+                          </Button>
+                          <Button
+                            type="primary"
+                            onClick={() => handleAcceptBooking(booking._id)}
+                          >
+                            Accept
+                          </Button>
                         </div>,
                       ]}
                     >

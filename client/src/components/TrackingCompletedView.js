@@ -9,7 +9,9 @@ const TrackingCompletedView = ({ setActiveTab }) => {
   useEffect(() => {
     const fetchCompletedBooking = async () => {
       try {
-        const response = await axios.get("/api/bookings/user/completed");
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND + "/api/bookings/user/completed"
+        );
         setBooking(response.data);
       } catch (error) {
         console.error("Error fetching completed booking:", error);
@@ -21,8 +23,17 @@ const TrackingCompletedView = ({ setActiveTab }) => {
 
   const bookingColumns = [
     { title: "ID", dataIndex: "_id", key: "_id" },
-    { title: "Driver Name", dataIndex: ["driver", "name"], key: "driverName", fixed: "left" },
-    { title: "Driver Email", dataIndex: ["driver", "email"], key: "driverEmail" },
+    {
+      title: "Driver Name",
+      dataIndex: ["driver", "name"],
+      key: "driverName",
+      fixed: "left",
+    },
+    {
+      title: "Driver Email",
+      dataIndex: ["driver", "email"],
+      key: "driverEmail",
+    },
     { title: "Status", dataIndex: "status", key: "status" },
     { title: "Price (₹)", dataIndex: "price", key: "price" },
     {
@@ -32,16 +43,21 @@ const TrackingCompletedView = ({ setActiveTab }) => {
         const tripTime = record.tripTime;
         return tripTime ? convertHH(tripTime) : "N/A";
       },
-      className: "whitespace-nowrap"
+      className: "whitespace-nowrap",
     },
   ];
 
   return (
     <Card className="flex flex-col" title="Completed Booking">
       {booking?.length > 0 ? (
-        <Table className="overflow-scroll" dataSource={booking} columns={bookingColumns} rowKey="_id" />
+        <Table
+          className="overflow-scroll"
+          dataSource={booking}
+          columns={bookingColumns}
+          rowKey="_id"
+        />
       ) : (
-        <p>No Pending bookings found</p>
+        <p>No Completed bookings found</p>
       )}
     </Card>
   );

@@ -39,10 +39,10 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const [usersRes, driversRes, bookingsRes, statsRes] = await Promise.all([
-        axios.get("/api/admin/users"),
-        axios.get("/api/admin/drivers"),
-        axios.get("/api/admin/bookings"),
-        axios.get("/api/admin/stats"),
+        axios.get(process.env.REACT_APP_BACKEND + "/api/admin/users"),
+        axios.get(process.env.REACT_APP_BACKEND + "/api/admin/drivers"),
+        axios.get(process.env.REACT_APP_BACKEND + "/api/admin/bookings"),
+        axios.get(process.env.REACT_APP_BACKEND + "/api/admin/stats"),
       ]);
       setUsers(usersRes.data);
       setDrivers(driversRes.data);

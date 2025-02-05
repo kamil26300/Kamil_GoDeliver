@@ -13,7 +13,9 @@ const DriverRegistrationForm = () => {
 
   useEffect(() => {
     const getAllVehicles = async () => {
-      const response = await axios.get("/api/vehicles");
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND + "/api/vehicles"
+      );
       setVehicles(response.data);
     };
     if ("geolocation" in navigator) {
@@ -41,12 +43,14 @@ const DriverRegistrationForm = () => {
       message.error("Location is required. Please enable location services.");
       return;
     }
-
     try {
-      const response = await axios.post("/api/drivers/register", {
-        ...values,
-        currentLocation: location,
-      });
+      const response = await axios.post(
+        process.env.REACT_APP_BACKEND + "/api/drivers/register",
+        {
+          ...values,
+          currentLocation: location,
+        }
+      );
       message.success("Registration successful!");
       navigate("/driver-dashboard");
     } catch (error) {

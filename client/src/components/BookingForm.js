@@ -27,19 +27,22 @@ const BookingForm = ({ setActiveTab }) => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post("/api/bookings", {
-        pickupLocation: {
-          address: values.pickup,
-          coordinates: [pickup.lng, pickup.lat],
-        },
-        dropoffLocation: {
-          address: values.dropoff,
-          coordinates: [dropoff.lng, dropoff.lat],
-        },
-        vehicleType: values.vehicleType,
-        distance,
-        estimatedDuration: duration
-      });
+      const response = await axios.post(
+        process.env.REACT_APP_BACKEND + "/api/bookings",
+        {
+          pickupLocation: {
+            address: values.pickup,
+            coordinates: [pickup.lng, pickup.lat],
+          },
+          dropoffLocation: {
+            address: values.dropoff,
+            coordinates: [dropoff.lng, dropoff.lat],
+          },
+          vehicleType: values.vehicleType,
+          distance,
+          estimatedDuration: duration,
+        }
+      );
       message.success("Booking created successfully");
       setActiveTab("2");
     } catch (error) {
@@ -59,8 +62,8 @@ const BookingForm = ({ setActiveTab }) => {
 
         setPickup({ lat, lng, address });
         form.setFieldsValue({
-          pickup: address
-        })
+          pickup: address,
+        });
       }
     }
   };
@@ -75,8 +78,8 @@ const BookingForm = ({ setActiveTab }) => {
 
         setDropoff({ lat, lng, address });
         form.setFieldsValue({
-          dropoff: address
-        })
+          dropoff: address,
+        });
       }
     }
   };
@@ -106,24 +109,24 @@ const BookingForm = ({ setActiveTab }) => {
     const value = e.target.value;
     setPickup({ address: value });
     form.setFieldsValue({
-      pickup: value
-    })
+      pickup: value,
+    });
   };
 
   const handleDropoffChange = (e) => {
     const value = e.target.value;
     setDropoff({ address: value });
     form.setFieldsValue({
-      dropoff: value
-    })
+      dropoff: value,
+    });
   };
 
   useEffect(() => {
     if (vehicle && distance) {
-      const fare = vehicle.basePrice + (vehicle.pricePerKm * distance)
-      setPrice({min: Math.floor(fare), max: Math.ceil(fare * 1.5)})
+      const fare = vehicle.basePrice + vehicle.pricePerKm * distance;
+      setPrice({ min: Math.floor(fare), max: Math.ceil(fare * 1.5) });
     }
-  }, [vehicle, distance])
+  }, [vehicle, distance]);
 
   useEffect(() => {
     if (pickup.lat && dropoff.lat) {
@@ -133,7 +136,9 @@ const BookingForm = ({ setActiveTab }) => {
 
   useEffect(() => {
     const fetchAllVehicles = async () => {
-      const response = await axios.get("/api/vehicles");
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND + "/api/vehicles"
+      );
       setVehicles(response.data);
     };
     fetchAllVehicles();

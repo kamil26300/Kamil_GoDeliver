@@ -8,7 +8,9 @@ const TrackingPendingView = ({ setActiveTab }) => {
   useEffect(() => {
     const fetchPendingBooking = async () => {
       try {
-        const response = await axios.get("/api/bookings/user/pending");
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND + "/api/bookings/user/pending"
+        );
         setBooking(response.data);
       } catch (error) {
         console.error("Error fetching pending booking:", error);
@@ -20,7 +22,9 @@ const TrackingPendingView = ({ setActiveTab }) => {
 
   const cancelBooking = async () => {
     try {
-      await axios.put(`/api/bookings/${booking._id}/status`, {status: "cancelled"});
+      await axios.put(`/api/bookings/${booking._id}/status`, {
+        status: "cancelled",
+      });
       message.success("Booking cancelled");
       setActiveTab("1");
     } catch (error) {
@@ -62,7 +66,9 @@ const TrackingPendingView = ({ setActiveTab }) => {
           </div>
           <div className="flex flex-col justify-around">
             {booking.status === "pending" && (
-              <Button type="primary" onClick={cancelBooking}>Cancel</Button>
+              <Button type="primary" onClick={cancelBooking}>
+                Cancel
+              </Button>
             )}
           </div>
         </div>

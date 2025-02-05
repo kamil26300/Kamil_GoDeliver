@@ -77,7 +77,9 @@ const TrackingActiveView = () => {
   useEffect(() => {
     const fetchActiveBooking = async () => {
       try {
-        const response = await axios.get("/api/bookings/user/active");
+        const response = await axios.get(
+          process.env.REACT_APP_BACKEND + "/api/bookings/user/active"
+        );
         setBooking(response.data);
       } catch (error) {
         console.error("Error fetching active booking:", error);
@@ -131,7 +133,7 @@ const TrackingActiveView = () => {
                     fullscreenControl: false,
                     cameraControl: false,
                     mapTypeControl: false,
-                    rotateControl: false
+                    rotateControl: false,
                   }}
                 >
                   {directions && (
