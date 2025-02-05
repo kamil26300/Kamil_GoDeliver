@@ -11,7 +11,18 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = ['https://go-deliver.onrender.com']; // Your Render frontend URL
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) { // Allow requests with no origin (like Postman)
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}));
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
