@@ -21,7 +21,7 @@ const TrackingCompletedView = ({ setActiveTab }) => {
 
   const bookingColumns = [
     { title: "ID", dataIndex: "_id", key: "_id" },
-    { title: "Driver Name", dataIndex: ["driver", "name"], key: "driverName" },
+    { title: "Driver Name", dataIndex: ["driver", "name"], key: "driverName", fixed: "left" },
     { title: "Driver Email", dataIndex: ["driver", "email"], key: "driverEmail" },
     { title: "Status", dataIndex: "status", key: "status" },
     { title: "Price (₹)", dataIndex: "price", key: "price" },
@@ -32,13 +32,14 @@ const TrackingCompletedView = ({ setActiveTab }) => {
         const tripTime = record.tripTime;
         return tripTime ? convertHH(tripTime) : "N/A";
       },
+      className: "whitespace-nowrap"
     },
   ];
 
   return (
     <Card className="flex flex-col" title="Completed Booking">
       {booking?.length > 0 ? (
-        <Table dataSource={booking} columns={bookingColumns} rowKey="_id" />
+        <Table className="overflow-scroll" dataSource={booking} columns={bookingColumns} rowKey="_id" />
       ) : (
         <p>No Pending bookings found</p>
       )}
